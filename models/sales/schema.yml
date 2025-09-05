@@ -1,0 +1,74 @@
+version: 2
+
+sources:
+  - name: sales_source
+    database: dev
+    schema: public
+    tables:
+      - name: sales
+
+models:
+  - name: sales
+    description: "Base model selecting all data from source: sales_source.sales"
+    columns:
+      - name: sale_id
+        description: "Unique identifier for each sale"
+        tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: "ID of the customer"
+        tests:
+          - not_null
+      - name: product_id
+        description: "ID of the product sold"
+        tests:
+          - not_null
+      - name: quantity
+        description: "Quantity of the product sold"
+      - name: total_amount
+        description: "Total amount for the sale"
+      - name: sale_date
+        description: "Date of the sale"
+
+  - name: sales_by_product
+    description: "Aggregated sales metrics per product"
+    columns:
+      - name: product_id
+        description: "Product ID"
+        tests:
+          - not_null
+      - name: total_sales
+        description: "Total sales amount per product"
+      - name: total_quantity
+        description: "Total quantity sold per product"
+
+  - name: avg_order_value
+    description: "Average order value across all sales"
+    columns:
+      - name: avg_order_value
+        description: "Average order value across all sales"
+        tests:
+          - not_null
+
+  - name: customer_segments
+    description: "Customer segmentation based on spending levels"
+    columns:
+      - name: customer_id
+        description: "ID of the customer"
+        tests:
+          - not_null
+      - name: segment
+        description: "Customer segment category"
+
+  - name: monthly_sales_summary
+    description: "Monthly aggregated sales and customer metrics"
+    columns:
+      - name: month
+        description: "Month of sales"
+        tests:
+          - not_null
+      - name: total_sales
+        description: "Total sales amount in the month"
+      - name: total_orders
+        description: "Number of orders in the month"
